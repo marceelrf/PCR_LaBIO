@@ -27,10 +27,6 @@ ui <- fluidPage(
                 multiple = TRUE,
                 accept = ".xls"),
       uiOutput("hsk_select"),
-      selectInput(inputId = "hsk",
-                  label = "Housekeeping genes",
-                  choices = LETTERS[1:5], #This will be change to a code that generate from the inputed files
-                  multiple = T),
       textInput(inputId = "groupSep",
                 label = "Group separator",
                 placeholder = "A symbol like [ . , : ; - _ ]")
