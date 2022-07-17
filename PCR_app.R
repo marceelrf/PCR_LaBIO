@@ -9,7 +9,10 @@ library(tibble)
 #
 options(shiny.maxRequestSize=30*1024^2)
 
-
+#Geometric mean function
+geometric.mean <- function(x,na.rm=TRUE){ 
+  exp(mean(log(x),na.rm=na.rm))
+}
 
 
 
