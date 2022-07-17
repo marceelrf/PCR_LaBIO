@@ -1,3 +1,5 @@
+# Libraries ---------------------------------------------------------------
+
 library(shiny)
 library(dplyr)
 library(tidyr)
@@ -5,6 +7,9 @@ library(stringr)
 library(purrr)
 library(readxl)
 library(tibble)
+library(shinyalert)
+library(glue)
+
 
 #
 options(shiny.maxRequestSize=30*1024^2)
@@ -82,6 +87,29 @@ server <- function(input, output, session) {
                 label = "Housekeeping genes",
                 choices = unique(data()$Gene), #This will be change to a code that generate from the inputed files
                 multiple = T)
+  })
+  
+  #Shiny alert of the group names
+  observeEvent(input$groupSep, {
+    
+    if(is.null(input$file)) {
+      return(NULL)
+    }
+    
+    else{
+      # Show a modal when the files are inputed
+      sample_names<- data() %>% 
+        select(Sample) %>% 
+        separate(col = Sample,into = c("Groups","Rep"),sep = input$groupSep) %>% 
+        select(Groups) %>% 
+        distinct() %>% 
+        pull(Groups)
+      
+      shinyalert("Your group names are:",
+                 paste(sample_names,
+                       collapse = ", "), type = "info")
+    }
+    
   })
   
   #Test if input works
